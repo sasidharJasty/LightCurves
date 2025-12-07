@@ -1,0 +1,30 @@
+{
+  "feature_columns": [
+    "period_days",
+    "transit_duration_hours",
+    "depth_ppm",
+    "planet_radius_re",
+    "stellar_radius_rs",
+    "stellar_teff_k",
+    "stellar_logg",
+    "snr",
+    "log_period",
+    "log_radius",
+    "depth_over_duration",
+    "mission_cat_UNKNOWN",
+    "mission_cat_nan"
+  ],
+  "numeric_columns": [
+    "period_days",
+    "transit_duration_hours",
+    "depth_ppm",
+    "planet_radius_re",
+    "stellar_radius_rs",
+    "stellar_teff_k",
+    "stellar_logg",
+    "snr",
+    "log_period",
+    "log_radius",
+    "depth_over_duration"
+  ]
+}
