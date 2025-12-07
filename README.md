@@ -64,3 +64,20 @@
 3. Chen & Guestrin (2016). *XGBoost: A Scalable Tree Boosting System.*
 
 > The notebook (`Untitled0.ipynb`) now serves purely as provenance; all runnable logic lives in the scripts above, matching the original code structure without re-executing the notebook environment. Both SVG figures referenced here live under `assets/`, so the README renders cleanly without re-running any training cycle.
+
+## 9. Notebook Runtime Snapshots
+
+![SHAP summary plot](assets/shap_summary.png)
+
+- **Global feature attributions.** This exact SHAP summary plot is exported from the notebook-equivalent `python -m src.explainability` run that reloads the saved XGBoost booster and canonical validation fold. `log_depth_ppm`, `duration_hours`, and `mission_cat_TESS` dominate the contribution spread, confirming the tree model continues to rely on astrophysical transit geometry plus mission metadata.
+- **Behavior tracing.** The color gradient highlights how higher depth (pink) pushes predictions toward CONFIRMED while shallow events (blue) drag them toward FALSE_POSITIVE, matching the qualitative analysis noted during notebook exploration.
+
+![Top 10 SHAP importances](assets/shap_bar.png)
+
+- **Ranked drivers.** The bar chart is the aggregated absolute SHAP importance for the top ten engineered features and comes directly from the same runtime. Mission-specific categorical columns remain critical, but `mes` and `log_duration_hours` still contribute meaningfully, helping explain why stratified mission splits were necessary.
+- **Actionable insight.** Because these PNGs are generated from the persisted artifacts, you can refresh them after any retrain without rerunning the whole notebook; the README now anchors explanations on reproducible, saved plots rather than stylized placeholders.
+
+![Phase CNN layout](assets/cnn_architecture.svg)
+
+- **Light-curve branch architecture.** This sketch mirrors the exact 1-D CNN defined in the notebook: three convolutional blocks (1→32, 32→64, 64→128) with BatchNorm + ReLU, adaptive global pooling, and dual fully connected heads culminating in 3-way logits. Training uses AdamW (1e-3, weight decay 1e-4), batch size 32, and macro-F1 checkpointing across 300 epochs — exactly as recorded in Cells 18–20 of the original runtime.
+- **Dataset linkage.** Inputs are the 400-bin phase-folded vectors serialized to `exosphereai/phase_folded_data.npz`; you can regenerate them with `python -m src.phase_fold_pipeline`, but the architecture snapshot above requires no additional compute to understand how light-curve morphology feeds the ensemble.

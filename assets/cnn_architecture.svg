@@ -1,0 +1,51 @@
+<svg width="720" height="260" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .bg { fill:#020617; stroke:#1e293b; stroke-width:2; rx:20; ry:20; }
+    .block { fill:#0f172a; stroke:#334155; stroke-width:2; rx:14; ry:14; }
+    .block text { font-family:"Helvetica",sans-serif; fill:#e2e8f0; font-size:14px; }
+    .title { font-family:"Helvetica",sans-serif; font-size:20px; fill:#f8fafc; font-weight:600; }
+    .arrow { stroke:#475569; stroke-width:2; marker-end:url(#arrowhead); }
+    .caption { font-family:"Helvetica",sans-serif; font-size:12px; fill:#94a3b8; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto">
+      <polygon points="0 0, 6 3, 0 6" fill="#475569" />
+    </marker>
+  </defs>
+  <rect class="bg" x="10" y="10" width="700" height="240" />
+  <text class="title" x="360" y="40" text-anchor="middle">Phase CNN Blueprint — Mirroring Notebook Runtime</text>
+
+  <g transform="translate(60,70)">
+    <rect class="block" width="140" height="80" />
+    <text x="70" y="35" text-anchor="middle">Conv1d 1→32</text>
+    <text x="70" y="55" text-anchor="middle">k=9 · BN · ReLU</text>
+  </g>
+  <line class="arrow" x1="200" y1="110" x2="240" y2="110" />
+
+  <g transform="translate(240,70)">
+    <rect class="block" width="140" height="80" />
+    <text x="70" y="35" text-anchor="middle">Conv1d 32→64</text>
+    <text x="70" y="55" text-anchor="middle">k=5 · BN · ReLU</text>
+  </g>
+  <line class="arrow" x1="380" y1="110" x2="420" y2="110" />
+
+  <g transform="translate(420,70)">
+    <rect class="block" width="140" height="80" />
+    <text x="70" y="30" text-anchor="middle">Conv1d 64→128</text>
+    <text x="70" y="50" text-anchor="middle">k=3 · ReLU</text>
+    <text x="70" y="70" text-anchor="middle">+ AdaptiveAvgPool</text>
+  </g>
+  <line class="arrow" x1="560" y1="110" x2="600" y2="110" />
+
+  <g transform="translate(600,70)">
+    <rect class="block" width="80" height="80" />
+    <text x="40" y="35" text-anchor="middle">FC 128</text>
+    <text x="40" y="55" text-anchor="middle">→ ReLU</text>
+  </g>
+  <line class="arrow" x1="640" y1="110" x2="680" y2="110" />
+  <rect class="block" x="660" y="70" width="40" height="80" />
+  <text x="680" y="115" text-anchor="middle" fill="#f8fafc" font-family="Helvetica" font-size="14">FC3</text>
+
+  <text class="caption" x="360" y="180" text-anchor="middle">Training loop: AdamW (1e-3, wd=1e-4), batch size 32, macro-F1 checkpointing, 300 epochs.</text>
+  <text class="caption" x="360" y="200" text-anchor="middle">Inputs are 400-bin phase-folded vectors saved in `phase_folded_data.npz` from the notebook run.</text>
+</svg>
